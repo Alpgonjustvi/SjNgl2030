@@ -255,3 +255,28 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
 
 });
 
+
+const linear_gradient_options = [
+"linear-gradient(to bottom right, rgb(239, 40, 113), rgb(239, 60, 60), rgb(254, 135, 21))",
+"linear-gradient(to bottom right, rgb(34, 86, 197), rgb(112, 60, 200), rgb(225, 90, 255))",
+"linear-gradient(to bottom right, rgb(255, 145, 55), rgb(255, 192, 90), rgb(255, 255, 35))",
+"linear-gradient(to bottom right, rgb(32, 159, 0), rgb(119, 221, 78), rgb(182, 255, 151))",
+"linear-gradient(to bottom right, rgb(207, 207, 207), rgb(62, 62, 62), rgb(49, 49, 49))",
+"linear-gradient(to bottom right, rgb(105, 0, 0), rgb(62, 62, 62), rgb(252, 217, 135))",
+"linear-gradient(to bottom right, rgb(63, 0, 105), rgb(62, 62, 62), rgb(220, 201, 107))"
+]
+
+document.querySelectorAll(".color_palette").forEach((palette, index) => {
+  palette.style.background = linear_gradient_options[index]
+  if (index == 0) {
+    palette.parentElement.classList.add("current")
+    document.querySelector("#ngl_bg_top").style.background = linear_gradient_options[0]
+  }
+  palette.addEventListener("click", () => {
+    document.querySelectorAll(".color_palette").forEach(node => {
+      node.parentElement.classList.remove("current")
+    })
+    palette.parentElement.classList.add("current")
+    document.querySelector("#ngl_bg_top").style.background = linear_gradient_options[index]
+  })
+})
