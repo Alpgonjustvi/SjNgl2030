@@ -57,22 +57,6 @@
 			margin-bottom: 80px;
 		}
 
-		#ngl_bg_top {
-			width: 180px;
-			padding-left: 50px;
-			padding-right: 50px;
-			height: 80px;
-			background: linear-gradient(to bottom right, rgb(239, 40, 113), rgb(239, 60, 60), rgb(254, 135, 21));
-			border-radius: 25px 25px 0 0;
-			z-index: 10;
-			color: white;
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			flex-direction: column;
-			gap: 0;
-		}
-
 		#ngl_bg_bottom {
 			width: 180px;
 			padding-bottom: 30px;
@@ -131,6 +115,36 @@
 			padding: 0;
 			margin: 0;
 		}
+
+		.color_palette {
+			width: 30px;
+			height: 30px;
+			background-color: aliceblue;
+			border-radius: 100%;
+		}
+		.color_paletteLi {
+			width: 30px;
+			height: 30px;
+			padding: 0;
+			margin: 0;
+			background-color: none;
+		}
+		.color_paletteUl {
+			margin: 0;
+			padding: 0;
+			display: flex;
+			gap: 10px;
+			position: absolute;
+			flex-direction: column;
+			right: 92%;
+			margin-top: 20px;
+			margin-left: 10px;
+		}
+
+		.current {
+			border: 1px solid white;;
+		}
+
 	</style>
 </head>
 
@@ -146,6 +160,15 @@
 		</section>
 		<section id="alt">
 			<h2 onclick="window.location.href = '/messages'" style="position: absolute; bottom: 88%; right: 94%;"><</h2>
+			<ul class="color_paletteUl">
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+				<li class="color_paletteLi"><div class="color_palette"></div></li>
+			</ul>
 			<section id="altt">
 				<div id="ngl_bg_top">
 					<h3>bana anonim olarak </h3>
