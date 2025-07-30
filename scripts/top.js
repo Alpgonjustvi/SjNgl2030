@@ -3,7 +3,10 @@ Array.from(document.querySelector(".top").children).forEach(li => {
   const pathname = "/" + headtext.toLowerCase().replace(/\s+/g, "_");
 
   if (window.location.pathname != pathname) {
-    li.classList.add("other")
+    if (window.location.pathname == "/" && pathname == "/send_ngl"){}
+    else {
+      li.classList.add("other")
+    }
   }
 
   li.addEventListener("click", () => {
