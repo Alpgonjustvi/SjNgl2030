@@ -9,6 +9,13 @@ fetch('/api/profile', {
 	.then(() => {
 		document.querySelector("h3").innerText += ` ${window.location.hash.split("?")[0]}`
 
+
+		async function getUserByFingerprint(fingerprint) {
+			const res = await fetch(`/api/user/${fingerprint}`);
+			if (!res.ok) throw new Error("User bulunamadı");
+			return await res.json();
+		}
+
 		async function loadMessages() {
 			try {
 				const res = await fetch("/api/messages");
@@ -19,7 +26,7 @@ fetch('/api/profile', {
 				const svgNS = "http://www.w3.org/2000/svg";
 
 
-				messages.forEach(msg => {
+				messages.forEach(async msg => {
 					if (msg.fingerprint == window.location.hash.split("?")[0].replace("#", "")) {
 
 
@@ -82,37 +89,46 @@ fetch('/api/profile', {
 						li.append(text);
 
 						list.appendChild(li);
+
+
 					}
 				})
 			} catch (err) {
 				console.error("Error loading messages:", err);
 			}
 
+			const user = await getUserByFingerprint(window.location.hash.split("?")[0].replace("#", ""))
+			if (user.blocked) {
+				document.querySelector("#blockBtn").style.backgroundColor = "#00000099"
+				document.querySelector("#blockBtn").innerText = "Cihaz Engellenmiş"
+				document.querySelector("#blockBtn").style.cursor = "not-allowed"
+			}
 
 			document.querySelector("#blockBtn").addEventListener("click", () => {
-				fetch('/api/block-device', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						deviceId: window.location.hash.split("?")[0].replace("#", ""), // burada deviceId'yi gönder
-						msgId: window.location.hash.split("?")[1]
+				if (!user.blocked) {
+					fetch('/api/block-device', {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							deviceId: window.location.hash.split("?")[0].replace("#", ""), // burada deviceId'yi gönder
+							msgId: window.location.hash.split("?")[1]
+						})
 					})
-				})
-					.then(res => {
-						if (!res.ok) throw new Error('İstek başarısız!');
-						return res.json();
-					})
-					.then(data => {
-						console.log('Cihaz bloklandı:', data);
-						window.location.href = "/messages"
-					})
-					.catch(err => {
-						console.error('Hata:', err);
-						alert('Cihaz bloklanamadı!');
-					});
-
+						.then(res => {
+							if (!res.ok) throw new Error('İstek başarısız!');
+							return res.json();
+						})
+						.then(data => {
+							console.log('Cihaz bloklandı:', data);
+							window.location.href = "/messages"
+						})
+						.catch(err => {
+							console.error('Hata:', err);
+							alert('Cihaz bloklanamadı!');
+						});
+				}
 			})
 		}
 
