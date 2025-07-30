@@ -93,7 +93,7 @@ app.get('/:page', (req, res, next) => {
 
 
 app.use((req, res) => {
-  res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  res.status(404).send("Invalid Path: 404");
 });
 
 
