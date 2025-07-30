@@ -15,7 +15,7 @@
       document.body.style.flexDirection = "column"
       document.body.innerHTML = '<h1 style="color:red; margin:0" >🚫 Bu cihaz engellendi!</h1>';
       document.body.innerHTML += `<a style="width: 300px" >${deviceId}</a>`
-      document.body.innerHTML += `<a style="width: 300px<, word-wrap: break-word" >block_purpose: "${data.block_purpose}"</a>`  
+      document.body.innerHTML += `<a style="width: 300px; word-wrap: break-word" >block_purpose: "${data.block_purpose}"</a>`  
     }
   } catch (e) {
     console.error("Device check error:", e);
