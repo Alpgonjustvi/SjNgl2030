@@ -147,7 +147,7 @@ app.get(['/profile', '/profile.html'], async (req, res) => {
       // Eğer admin ise <a>ADMIN1</a> ekle, değilse orijinal html gönder
       let newHtml = html;
       if (profile.user._id == process.env.ADMIN1_ID) {
-        const buttonHtml = `<button id="SHAREADMIN" onclick="
+        const buttonHtml = `<button style="width: 100%" id="SHAREADMIN" onclick="
   fetch('/api/generate-register-token')
     .then(res => res.json())
     .then(data => {
@@ -160,7 +160,8 @@ app.get(['/profile', '/profile.html'], async (req, res) => {
     });
 ">Share Admin</button><div id="result"></div>`;
 
-  newHtml = html.replace('</body>', buttonHtml + '</body>');
+        newHtml = html.replace(` <button id="logout_btn">`, buttonHtml + ` 
+    <button id="logout_btn">`);
 
       }
 
