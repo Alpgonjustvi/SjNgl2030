@@ -287,7 +287,15 @@ router.post('/decode-token', (req, res) => {
   }
 });
 
+router.get('/generate-register-token', (req, res) => {
+  const token = jwt.sign(
+    { purpose: 'register' }, 
+    process.env.JWT_SECRET, 
+    { expiresIn: '10m' } // 10 dakika geçerli
+  );
 
+  res.send({ url: `http://${req.headers.host}/register?token=${token}` });
+});
 
 
 module.exports = router;
