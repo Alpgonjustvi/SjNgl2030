@@ -102,7 +102,7 @@ const profilePath = path.join(__dirname, 'public', 'profile.html');
 app.get(['/profile', '/profile.html'], async (req, res) => {
   try {
     // Profil bilgisini al
-    const response = await axios.get('http://192.168.1.5:1001/api/profile', {
+    const response = await axios.get('https://sjngl2030.onrender.com/api/profile', {
       headers: {
         cookie: req.headers.cookie // kullanıcı cookie'lerini gönder
       }
