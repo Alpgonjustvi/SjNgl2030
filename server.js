@@ -24,6 +24,34 @@ app.use(express.json({ limit: '10mb' }));
 app.use(cookieParser());
 
 
+// Bu path'lere fetch isteği atan sadece admin olabilsin
+app.use(async (req, res, next) => {
+  // Eğer path listedeyse admin kontrolü yap
+  const allowedFetchPaths = [
+    "/api/generate-register-token"
+  ];
+
+  if (allowedFetchPaths.some(path => req.path.startsWith(path))) {
+    try {
+      // Cookie ile profil bilgisini al
+      const response = await axios.get('https://sjngl2030.onrender.com/api/profile', {/////////////////////////// https://sjngl2030.onrender.com/api/profile
+        headers: { cookie: req.headers.cookie }
+      });
+
+      const profile = response.data;
+
+      // Admin mi kontrol
+      if (profile.user._id !== process.env.ADMIN1_ID) {
+        return res.status(403).json({ error: "Low Permission: {just_admin:'level:1'} \n You're admin level is: 2" });
+      }
+    } catch (err) {
+      return res.status(403).json({ error: "Low Permission: {just_admin:'level:1'} \n You have no any admin level." });
+    }
+  }
+
+  next();
+});
+
 //API allowed with out login
 app.use("/api", (req, res, next) => {
   const allowedPaths = [
@@ -62,6 +90,9 @@ app.use("/api", (req, res, next) => {
   });
 });
 
+
+
+
 //API
 app.use('/api', authRouter);
 app.use('/api', profileRouter);
@@ -76,21 +107,21 @@ app.get(['/register', '/register.html'], (req, res) => {
   const token = req.query.token;
 
   // Token yoksa veya geçersizse 403
-  if (!token) return res.status(403).send('Token is required');
+  if (!token) return res.status(403).send("Low Permission: {just_user:'level:1'} \n You're user level is: 3");
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // Token doğru ama 10 dakika geçmişse jwt.verify hata verir
     if (decoded.purpose !== 'register') {
-      return res.status(403).send('Invalid token');
+      return res.status(403).send("Low Permission: {just_user:'level:1'} \n You're user level is: 3");
     }
 
     // Token geçerli → register.html gönder
     res.sendFile(path.join(__dirname, 'public', 'register.html'));
   } catch (err) {
     console.log(err);
-    return res.status(403).send('Token expired or invalid');
+    return res.status(403).send("Low Permission: {just_user:'level:1'} \n You're user level is: 3");
   }
 });
 
@@ -102,7 +133,7 @@ const profilePath = path.join(__dirname, 'public', 'profile.html');
 app.get(['/profile', '/profile.html'], async (req, res) => {
   try {
     // Profil bilgisini al
-    const response = await axios.get('https://sjngl2030.onrender.com/api/profile', {
+    const response = await axios.get('https://sjngl2030.onrender.com/api/profile', { //////////////////// 
       headers: {
         cookie: req.headers.cookie // kullanıcı cookie'lerini gönder
       }
