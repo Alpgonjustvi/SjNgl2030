@@ -42,7 +42,6 @@ router.patch('/sendMessage', async (req, res) => {
 router.patch('/getEvent', async (req, res) => {
   try {
     const { eventId } = req.body; // frontend ile aynı isim olmalı
-    console.log(req.body)
     if (!eventId) {
       return res.status(400).json({ error: "eventId is required" });
     }
