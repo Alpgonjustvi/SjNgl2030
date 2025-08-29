@@ -56,8 +56,6 @@ window.addEventListener("DOMContentLoaded", async () => {
         document.querySelector("#background h3").addEventListener("click", () =>{
           const urlParams2 = new URLSearchParams(window.location.search);
           const eventId2 = urlParams.get("event");
-          alert(eventId2)
-          alert(window.location.href)
         })
         document.querySelector("#background").style.height = "50px";
         alert(eventId)
