@@ -54,6 +54,7 @@ window.addEventListener("DOMContentLoaded", async () => {
       if (!data.success) {
         document.getElementById("background").innerHTML = "<h3> Event Didn't Exist </h3>"
         document.querySelector("#background").style.height = "50px";
+        alert(eventId)
       } else {
         document.body.querySelector("h3").innerText = data.event.name
         document.body.querySelector("input").placeholder = "Your answer"
