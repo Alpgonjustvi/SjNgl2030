@@ -53,10 +53,6 @@ window.addEventListener("DOMContentLoaded", async () => {
       const data = await res.json();
       if (!data.success) {
         document.getElementById("background").innerHTML = "<h3> Event Didn't Exist </h3>"
-        document.querySelector("#background h3").addEventListener("click", () =>{
-          const urlParams2 = new URLSearchParams(window.location.search);
-          const eventId2 = urlParams.get("event");
-        })
         document.querySelector("#background").style.height = "50px";
         alert(eventId)
       } else {
