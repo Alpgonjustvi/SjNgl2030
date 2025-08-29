@@ -66,7 +66,8 @@ app.use("/api", (req, res, next) => {
     "/profile",
     "/check-device",
     "/logout",
-    "/sendMessage"
+    "/sendMessage",
+    "/getEvent"
   ];
 
   // Bu path'lerde token zorunlu değil
